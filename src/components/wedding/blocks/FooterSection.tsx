@@ -41,6 +41,12 @@ export function FooterSection() {
             <p className="mt-2 font-serifDisplay text-[24px] font-light uppercase tracking-[0.08em] text-[#f2e7d8]">
               НИКОЛАЙ И ЕКАТЕРИНА
             </p>
+            <a
+              href="#/second-day"
+              className="mt-6 inline-flex min-h-[50px] w-full items-center justify-center rounded-full border border-white/22 bg-transparent px-6 text-center text-[12px] uppercase tracking-[0.2em] text-[#f7f2eb] transition hover:bg-white/10"
+            >
+              Присоединяйтесь ко второму дню празднования
+            </a>
           </div>
         </InviteCard>
       </Reveal>

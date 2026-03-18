@@ -10,9 +10,15 @@ import { VenueSection } from './blocks/VenueSection'
 import { getPublicAssetUrl } from './shared/getPublicAssetUrl'
 
 export function WeddingInvitation() {
-  const [isInvitationOpen, setIsInvitationOpen] = useState(false)
+  const [isInvitationOpen, setIsInvitationOpen] = useState(() => (
+    window.sessionStorage.getItem('weddingInvitationOpen') === 'true'
+  ))
   const [isEnvelopeOpening, setIsEnvelopeOpening] = useState(false)
   const backgroundImageSrc = getPublicAssetUrl('фон.jpg')
+
+  useEffect(() => {
+    window.sessionStorage.setItem('weddingInvitationOpen', String(isInvitationOpen))
+  }, [isInvitationOpen])
 
   useEffect(() => {
     if (!isInvitationOpen) {
