@@ -1,0 +1,64 @@
+@import '@fontsource/montserrat/300.css';
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/500.css';
+@import '@fontsource/cormorant-garamond/300.css';
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/great-vibes/400.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --wedding-green: #3d4a3a;
+  --wedding-cream: #f0e6d8;
+  --wedding-gold: #c9a962;
+  --wedding-dark: #2a3328;
+  --wedding-light: #f5f0e8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #1a1314;
+  color: #f7f3ee;
+  font-family: 'Montserrat', sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(122, 16, 35, 0.28);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2a1b1f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7a1023;
+  border-radius: 999px;
+}
