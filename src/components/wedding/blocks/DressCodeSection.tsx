@@ -1,7 +1,10 @@
 import { InviteCard } from '../shared/InviteCard'
 import { Reveal } from '../shared/Reveal'
+import { getPublicAssetUrl } from '../shared/getPublicAssetUrl'
 
 export function DressCodeSection() {
+  const paletteImageSrc = getPublicAssetUrl('палитра.png')
+
   return (
     <Reveal>
       <InviteCard variant="dark" className="px-8 py-12 sm:px-10">
@@ -22,7 +25,7 @@ export function DressCodeSection() {
 
           <div className="mt-10 flex justify-center px-2">
             <img
-              src="/палитра.png"
+              src={paletteImageSrc}
               alt="Палитра дресс-кода"
               className="w-full max-w-[460px] object-contain"
             />

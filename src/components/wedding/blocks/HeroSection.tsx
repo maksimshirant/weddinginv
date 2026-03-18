@@ -1,5 +1,6 @@
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
+import { getPublicAssetUrl } from '../shared/getPublicAssetUrl'
 
 const weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'] as const
 const mayGrid = [
@@ -11,6 +12,8 @@ const mayGrid = [
 ] as const
 
 export function HeroSection() {
+  const heroImageSrc = getPublicAssetUrl('hero.jpg')
+
   return (
     <>
       <Reveal>
@@ -22,8 +25,8 @@ export function HeroSection() {
         >
           <div className="relative min-h-[760px]">
             <img
-              src="/hero.jpg"
-              alt="Александр и Елена"
+              src={heroImageSrc}
+              alt="Николай и Екатерина"
               className="absolute inset-0 h-full min-h-[760px] w-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(17,10,12,0.28),rgba(17,10,12,0.18)_34%,rgba(17,10,12,0.62)_78%,rgba(17,10,12,0.74))]" />

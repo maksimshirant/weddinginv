@@ -7,10 +7,12 @@ import { RsvpSection } from './blocks/RsvpSection'
 import { TimelineSection } from './blocks/TimelineSection'
 import { WishesSection } from './blocks/WishesSection'
 import { VenueSection } from './blocks/VenueSection'
+import { getPublicAssetUrl } from './shared/getPublicAssetUrl'
 
 export function WeddingInvitation() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false)
   const [isEnvelopeOpening, setIsEnvelopeOpening] = useState(false)
+  const backgroundImageSrc = getPublicAssetUrl('фон.jpg')
 
   useEffect(() => {
     if (!isInvitationOpen) {
@@ -37,7 +39,7 @@ export function WeddingInvitation() {
     <div className="relative min-h-screen text-[#201d1a]">
       <div className="fixed inset-0 -z-10">
         <img
-          src="/фон.jpg"
+          src={backgroundImageSrc}
           alt=""
           className="h-full w-full object-cover object-center"
         />

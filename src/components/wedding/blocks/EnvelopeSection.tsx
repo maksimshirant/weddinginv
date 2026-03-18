@@ -1,3 +1,5 @@
+import { getPublicAssetUrl } from '../shared/getPublicAssetUrl'
+
 type EnvelopeSectionProps = {
   isOpening: boolean
   onOpen: () => void
@@ -7,6 +9,8 @@ export function EnvelopeSection({
   isOpening,
   onOpen,
 }: EnvelopeSectionProps) {
+  const envelopeImageSrc = getPublicAssetUrl('конверт.png')
+
   return (
     <section className="relative z-10 flex min-h-screen items-center justify-center px-4 py-8">
       <div className="w-full max-w-[280px] text-center">
@@ -21,7 +25,7 @@ export function EnvelopeSection({
         >
           <div className="relative mx-auto h-[108px] w-[150px] overflow-hidden rounded-[2px]">
             <img
-              src="/конверт.png"
+              src={envelopeImageSrc}
               alt=""
               className="h-full w-full object-cover object-[center_52%] [filter:sepia(0.2)_saturate(0.82)_hue-rotate(-10deg)_brightness(0.98)] scale-[1.24]"
             />
