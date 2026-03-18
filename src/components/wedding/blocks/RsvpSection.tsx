@@ -9,17 +9,20 @@ type FormState = {
   name: string
   attending: Attending
   drinks: string[]
+  otherDrink: string
 }
 
 const initialState: FormState = {
   name: '',
   attending: '',
   drinks: [],
+  otherDrink: '',
 }
 
 export function RsvpSection() {
   const [formState, setFormState] = useState<FormState>(initialState)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const isOtherDrinkSelected = formState.drinks.includes('other')
 
   const handleDrinkToggle = (value: string) => {
     setFormState((current) => ({
@@ -27,6 +30,10 @@ export function RsvpSection() {
       drinks: current.drinks.includes(value)
         ? current.drinks.filter((item) => item !== value)
         : [...current.drinks, value],
+      otherDrink:
+        value === 'other' && current.drinks.includes(value)
+          ? ''
+          : current.otherDrink,
     }))
   }
 
@@ -139,6 +146,27 @@ export function RsvpSection() {
                       </label>
                     ))}
                   </div>
+                  {isOtherDrinkSelected ? (
+                    <div className="mt-5">
+                      <label className="block text-[10px] uppercase tracking-[0.24em] text-[#201d1a]/46">
+                        Ваш вариант
+                      </label>
+                      <input
+                        type="text"
+                        name="otherDrink"
+                        value={formState.otherDrink}
+                        onChange={(event) =>
+                          setFormState((current) => ({
+                            ...current,
+                            otherDrink: event.target.value,
+                          }))
+                        }
+                        required={isOtherDrinkSelected}
+                        placeholder="Напишите напиток"
+                        className="mt-3 w-full border-0 border-b border-[#201d1a]/22 bg-transparent px-0 pb-3 pt-1 text-[15px] text-[#201d1a] placeholder:text-[#201d1a]/36 outline-none transition focus:border-[#7a1023]"
+                      />
+                    </div>
+                  ) : null}
                 </fieldset>
 
                 <button

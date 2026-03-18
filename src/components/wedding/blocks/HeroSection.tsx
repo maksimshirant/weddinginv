@@ -31,8 +31,8 @@ export function HeroSection() {
             />
             <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(17,10,12,0.28),rgba(17,10,12,0.18)_34%,rgba(17,10,12,0.62)_78%,rgba(17,10,12,0.74))]" />
 
-            <div className="relative z-10 flex min-h-[760px] flex-col justify-between px-8 pb-10 pt-14 text-center sm:px-10">
-              <div className="pt-2">
+            <div className="relative z-10 flex min-h-[760px] flex-col justify-between px-8 pb-10 pt-8 text-center sm:px-10">
+              <div>
                 <h1 className="font-serifDisplay text-[40px] font-light uppercase leading-[0.94] tracking-[0.08em] text-[#f7f2eb] sm:text-[50px]">
                   НИКОЛАЙ
                 </h1>
@@ -42,7 +42,7 @@ export function HeroSection() {
                 <h1 className="mt-1 font-serifDisplay text-[40px] font-light uppercase leading-[0.94] tracking-[0.08em] text-[#f7f2eb] sm:text-[50px]">
                   ЕКАТЕРИНА
                 </h1>
-                <div className="mt-6 font-serifDisplay text-[28px] font-light tracking-[0.18em] text-[#f0e6d8] sm:text-[34px]">
+                <div className="mt-1 font-serifDisplay text-[28px] font-light tracking-[0.18em] text-[#f0e6d8] sm:text-[34px]">
                   05 05 25
                 </div>
               </div>

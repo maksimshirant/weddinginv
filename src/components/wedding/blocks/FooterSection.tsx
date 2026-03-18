@@ -19,7 +19,7 @@ export function FooterSection() {
               disabled
               className="mt-8 inline-flex min-h-[50px] w-full items-center justify-center rounded-full border border-white/22 bg-transparent px-6 text-[12px] uppercase tracking-[0.2em] text-[#f7f2eb] opacity-90"
             >
-              Присоединиться
+              Скоро добавим
             </button>
           </div>
         </InviteCard>
@@ -35,7 +35,10 @@ export function FooterSection() {
               Очень ждём вас, чтобы разделить этот день вместе и сохранить его
               в памяти как тёплую семейную историю.
             </p>
-            <p className="mt-8 font-serifDisplay text-[24px] font-light uppercase tracking-[0.08em] text-[#f2e7d8]">
+            <p className="mt-8 text-[13px] tracking-[0.12em] text-white/62">
+              с любовью
+            </p>
+            <p className="mt-2 font-serifDisplay text-[24px] font-light uppercase tracking-[0.08em] text-[#f2e7d8]">
               НИКОЛАЙ И ЕКАТЕРИНА
             </p>
           </div>

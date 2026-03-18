@@ -1,9 +1,11 @@
 import { wishes } from '../data'
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
-import { PlaceholderImage } from '../shared/PlaceholderImage'
+import { getPublicAssetUrl } from '../shared/getPublicAssetUrl'
 
 export function WishesSection() {
+  const detailsImageSrc = getPublicAssetUrl('details.jpg')
+
   return (
     <Reveal>
       <InviteCard variant="dark" className="px-8 py-12 sm:px-10">
@@ -33,11 +35,11 @@ export function WishesSection() {
             ))}
           </div>
 
-          <div className="mt-10">
-            <PlaceholderImage
-              label="[ДЕКОР: графический арт-блок]"
-              tone="dark"
-              className="aspect-[16/9] rounded-[2px]"
+          <div className="mt-10 aspect-[828/651] overflow-hidden rounded-[2px]">
+            <img
+              src={detailsImageSrc}
+              alt="Детали торжества"
+              className="h-full w-full object-cover object-bottom"
             />
           </div>
         </div>
