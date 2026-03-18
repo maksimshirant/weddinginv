@@ -1,7 +1,16 @@
+import { type RefObject } from 'react'
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
 
-export function FooterSection() {
+type FooterSectionProps = {
+  secondDayButtonRef: RefObject<HTMLAnchorElement | null>
+  shouldHighlightSecondDayButton: boolean
+}
+
+export function FooterSection({
+  secondDayButtonRef,
+  shouldHighlightSecondDayButton,
+}: FooterSectionProps) {
   return (
     <div className="space-y-5">
       <Reveal>
@@ -42,8 +51,15 @@ export function FooterSection() {
               НИКОЛАЙ И ЕКАТЕРИНА
             </p>
             <a
+              id="second-day-cta"
+              ref={secondDayButtonRef}
               href="#/second-day"
-              className="mt-6 inline-flex min-h-[50px] w-full items-center justify-center rounded-full border border-white/22 bg-transparent px-6 text-center text-[12px] uppercase tracking-[0.2em] text-[#f7f2eb] transition hover:bg-white/10"
+              className={[
+                'mt-6 inline-flex min-h-[50px] w-full items-center justify-center rounded-full border border-white/22 bg-transparent px-6 text-center text-[12px] uppercase tracking-[0.2em] text-[#f7f2eb] transition hover:bg-white/10',
+                shouldHighlightSecondDayButton
+                  ? 'animate-[pulse_1.2s_ease-in-out_infinite] border-[#f2e2c6] bg-white/12 shadow-[0_0_0_6px_rgba(255,255,255,0.07)]'
+                  : '',
+              ].join(' ')}
             >
               Присоединяйтесь ко второму дню празднования
             </a>

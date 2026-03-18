@@ -1,15 +1,27 @@
 import { useEffect, useState } from 'react'
 import { DressCodeSection } from './blocks/DressCodeSection'
 import { EnvelopeSection } from './blocks/EnvelopeSection'
-import { FooterSection } from './blocks/FooterSection'
 import { HeroSection } from './blocks/HeroSection'
 import { RsvpSection } from './blocks/RsvpSection'
 import { TimelineSection } from './blocks/TimelineSection'
 import { WishesSection } from './blocks/WishesSection'
 import { VenueSection } from './blocks/VenueSection'
 import { getPublicAssetUrl } from './shared/getPublicAssetUrl'
+import { type InvitationDraft } from './shared/invitationDraft'
 
-export function WeddingInvitation() {
+type WeddingInvitationProps = {
+  draft: InvitationDraft
+  onGuestFullNameChange: (value: string) => void
+  onFirstDayChange: (nextFirstDay: InvitationDraft['firstDay']) => void
+  onFirstDaySave: () => void
+}
+
+export function WeddingInvitation({
+  draft,
+  onGuestFullNameChange,
+  onFirstDayChange,
+  onFirstDaySave,
+}: WeddingInvitationProps) {
   const [isInvitationOpen, setIsInvitationOpen] = useState(() => (
     window.sessionStorage.getItem('weddingInvitationOpen') === 'true'
   ))
@@ -41,6 +53,11 @@ export function WeddingInvitation() {
     }, 500)
   }
 
+  const handleSaveFirstDay = () => {
+    onFirstDaySave()
+    window.location.hash = '#/second-day'
+  }
+
   return (
     <div className="relative min-h-screen text-[#201d1a]">
       <div className="fixed inset-0 -z-10">
@@ -64,8 +81,13 @@ export function WeddingInvitation() {
             <TimelineSection />
             <DressCodeSection />
             <WishesSection />
-            <RsvpSection />
-            <FooterSection />
+            <RsvpSection
+              guestFullName={draft.guest.fullName}
+              formState={draft.firstDay}
+              onGuestFullNameChange={onGuestFullNameChange}
+              onChange={onFirstDayChange}
+              onSave={handleSaveFirstDay}
+            />
           </div>
         </main>
       )}

@@ -13,15 +13,15 @@ export function VenueSection() {
       >
         <div className="text-center">
           <h2 className="font-serifDisplay text-[42px] font-light uppercase leading-[0.95] tracking-[0.08em] text-[#281d17] sm:text-[48px]">
-            ГУЛЯЕМ
+            МЕСТО
             <br />
-            ДАЛЬШЕ
+            ПЛЯСОК
           </h2>
 
           <div className="mt-8 space-y-10">
             <div className="space-y-4 rounded-[2px] border border-[#7f1730]/12 bg-[rgba(255,250,241,0.54)] px-5 py-6">
               <p className="text-[11px] uppercase tracking-[0.22em] text-[#7f1730]/68">
-                Банкетный вайб
+                Где будем танцевать
               </p>
               <p className="mx-auto max-w-[340px] text-[15px] font-light leading-[1.65] text-[#281d17]/82">
                 Здесь будет точная локация второго дня:
