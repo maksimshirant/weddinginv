@@ -117,11 +117,6 @@ export function RsvpSection({
               <h2 className="text-center font-serifDisplay text-[42px] font-light uppercase leading-[0.95] tracking-[0.08em] text-[#201d1a] sm:text-[48px]">
                 АНКЕТА ПЕРВОГО ДНЯ
               </h2>
-              <p className="mx-auto mt-5 max-w-[360px] text-center text-[14px] leading-[1.75] text-[#201d1a]/72">
-                Сохраните ответы по основному дню, а затем перейдите ко второму
-                дню празднования.
-              </p>
-
               <form onSubmit={handleSubmit} className="mt-8 space-y-8">
                 <div>
                   <label className="block text-[10px] uppercase tracking-[0.24em] text-[#201d1a]/46">

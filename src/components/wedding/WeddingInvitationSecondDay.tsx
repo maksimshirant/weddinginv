@@ -178,13 +178,8 @@ export function WeddingInvitationSecondDay({
             ) : (
               <>
                 <h3 className="text-center font-serifDisplay text-[34px] font-light uppercase leading-[0.95] tracking-[0.08em] text-[#281d17] sm:text-[42px]">
-                  ПРОВЕРЬТЕ АНКЕТУ
+                  ПРОВЕРЬТЕ АНКЕТУ ПЕРЕД ОТПРАВКОЙ
                 </h3>
-                <p className="mx-auto mt-2 max-w-[360px] text-center text-[12px] leading-[1.55] text-[#281d17]/72 sm:text-[13px]">
-                  Проверьте ответы перед отправкой. Первый и второй день разделены отдельно,
-                  чтобы ничего не перепутать.
-                </p>
-
                 <div className="mt-4 rounded-[2px] border border-[#a48658]/16 bg-[rgba(255,250,242,0.82)] px-4 py-3">
                   <div className="text-[9px] uppercase tracking-[0.16em] text-[#281d17]/48 sm:text-[10px]">
                     Гость
