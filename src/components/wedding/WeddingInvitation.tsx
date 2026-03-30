@@ -10,6 +10,9 @@ import { FooterSection as ConnectionSection } from './blocks2/FooterSection'
 import { getPublicAssetUrl } from './shared/getPublicAssetUrl'
 import { type InvitationDraft } from './shared/invitationDraft'
 
+const INVITATION_SCROLL_TARGET_STORAGE_KEY = 'weddingInvitationScrollTarget'
+const FIRST_DAY_RSVP_SCROLL_TARGET = 'first-day-rsvp'
+
 type WeddingInvitationProps = {
   draft: InvitationDraft
   onGuestFullNameChange: (value: string) => void
@@ -57,7 +60,21 @@ export function WeddingInvitation({
       return
     }
 
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
+    const scrollTarget = window.sessionStorage.getItem(INVITATION_SCROLL_TARGET_STORAGE_KEY)
+
+    if (scrollTarget !== FIRST_DAY_RSVP_SCROLL_TARGET) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
+      return
+    }
+
+    window.sessionStorage.removeItem(INVITATION_SCROLL_TARGET_STORAGE_KEY)
+
+    window.requestAnimationFrame(() => {
+      document.getElementById('rsvp-card')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
   }, [isInvitationOpen])
 
   const handleOpenEnvelope = () => {
@@ -101,6 +118,7 @@ export function WeddingInvitation({
             <VenueSection />
             <DressCodeSection />
             <WishesSection />
+            <ConnectionSection />
             <RsvpSection
               guestFullName={draft.guest.fullName}
               formState={draft.firstDay}
@@ -108,7 +126,6 @@ export function WeddingInvitation({
               onChange={onFirstDayChange}
               onSave={handleSaveFirstDay}
             />
-            <ConnectionSection />
           </div>
         </main>
       )}

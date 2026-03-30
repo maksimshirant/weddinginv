@@ -5,17 +5,13 @@ import { InviteCard } from '../shared/InviteCard'
 import { type InvitationDraft } from '../shared/invitationDraft'
 
 type RsvpSectionProps = {
-  guestFullName: string
   formState: InvitationDraft['secondDay']
-  onGuestFullNameChange: (value: string) => void
   onChange: (nextFormState: InvitationDraft['secondDay']) => void
   onOpenSummary: () => void
 }
 
 export function RsvpSection({
-  guestFullName,
   formState,
-  onGuestFullNameChange,
   onChange,
   onOpenSummary,
 }: RsvpSectionProps) {
@@ -78,21 +74,6 @@ export function RsvpSection({
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-8">
-            <div>
-              <label className="block text-[10px] uppercase tracking-[0.24em] text-[#281d17]/56">
-                Имя и фамилия гостя
-              </label>
-              <input
-                type="text"
-                name="guestFullName"
-                value={guestFullName}
-                onChange={(event) => onGuestFullNameChange(event.target.value)}
-                required
-                placeholder="Иван Иванов"
-                className="mt-3 w-full rounded-[2px] border border-[#a48658]/34 bg-[rgba(255,250,242,0.88)] px-4 py-3 text-[16px] text-[#281d17] placeholder:text-[#281d17]/42 outline-none transition focus:border-[#710f23] focus:bg-white sm:text-[15px]"
-              />
-            </div>
-
             <fieldset>
               <legend className="block text-[10px] uppercase tracking-[0.24em] text-[#281d17]/56">
                 Участие во втором дне
@@ -182,7 +163,7 @@ export function RsvpSection({
               type="submit"
               className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-full border border-[#710f23] bg-[#710f23] px-6 text-[12px] uppercase tracking-[0.2em] text-[#f7f1e8] transition hover:bg-[#5f0c1d]"
             >
-              Сохранить
+              Проверить и отправить
             </button>
           </form>
         </div>

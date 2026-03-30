@@ -15,7 +15,9 @@ export type InvitationDraft = {
   firstDay: DayRsvpState & {
     isSaved: boolean
   }
-  secondDay: DayRsvpState
+  secondDay: DayRsvpState & {
+    isSubmitted: boolean
+  }
 }
 
 export type InvitationSubmissionPayload = {
@@ -40,7 +42,59 @@ export const initialInvitationDraft: InvitationDraft = {
     ...createDayRsvpState(),
     isSaved: false,
   },
-  secondDay: createDayRsvpState(),
+  secondDay: {
+    ...createDayRsvpState(),
+    isSubmitted: false,
+  },
+}
+
+function isAttending(value: unknown): value is Attending {
+  return value === '' || value === 'yes' || value === 'no'
+}
+
+function sanitizeDayRsvpState(value: unknown): DayRsvpState {
+  if (!value || typeof value !== 'object') {
+    return createDayRsvpState()
+  }
+
+  const candidate = value as Partial<DayRsvpState>
+
+  return {
+    attending: isAttending(candidate.attending) ? candidate.attending : '',
+    drinks: Array.isArray(candidate.drinks)
+      ? candidate.drinks.filter((item): item is string => typeof item === 'string')
+      : [],
+    otherDrink: typeof candidate.otherDrink === 'string' ? candidate.otherDrink : '',
+  }
+}
+
+export function parseInvitationDraft(value: string | null): InvitationDraft {
+  if (!value) {
+    return initialInvitationDraft
+  }
+
+  try {
+    const parsed = JSON.parse(value) as Partial<InvitationDraft>
+
+    return {
+      guest: {
+        fullName:
+          parsed.guest && typeof parsed.guest.fullName === 'string'
+            ? parsed.guest.fullName
+            : '',
+      },
+      firstDay: {
+        ...sanitizeDayRsvpState(parsed.firstDay),
+        isSaved: Boolean(parsed.firstDay?.isSaved),
+      },
+      secondDay: {
+        ...sanitizeDayRsvpState(parsed.secondDay),
+        isSubmitted: false,
+      },
+    }
+  } catch {
+    return initialInvitationDraft
+  }
 }
 
 const attendingLabels: Record<Attending, string> = {

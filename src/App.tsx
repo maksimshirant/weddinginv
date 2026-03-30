@@ -5,9 +5,11 @@ import {
   buildInvitationSubmissionPayload,
   type InvitationDraft,
   initialInvitationDraft,
+  parseInvitationDraft,
 } from './components/wedding/shared/invitationDraft'
 
 type InvitationRoute = 'main' | 'second-day'
+const INVITATION_DRAFT_STORAGE_KEY = 'weddingInvitationDraft'
 
 function getInvitationRoute(): InvitationRoute {
   return window.location.hash === '#/second-day' ? 'second-day' : 'main'
@@ -15,7 +17,13 @@ function getInvitationRoute(): InvitationRoute {
 
 function App() {
   const [route, setRoute] = useState<InvitationRoute>(() => getInvitationRoute())
-  const [draft, setDraft] = useState<InvitationDraft>(initialInvitationDraft)
+  const [draft, setDraft] = useState<InvitationDraft>(() => {
+    if (typeof window === 'undefined') {
+      return initialInvitationDraft
+    }
+
+    return parseInvitationDraft(window.localStorage.getItem(INVITATION_DRAFT_STORAGE_KEY))
+  })
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -32,6 +40,10 @@ function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
   }, [route])
+
+  useEffect(() => {
+    window.localStorage.setItem(INVITATION_DRAFT_STORAGE_KEY, JSON.stringify(draft))
+  }, [draft])
 
   useEffect(() => {
     if (route !== 'second-day' || draft.firstDay.isSaved) {
@@ -89,7 +101,6 @@ function App() {
     ? (
         <WeddingInvitationSecondDay
           draft={draft}
-          onGuestFullNameChange={handleGuestFullNameChange}
           onSecondDayChange={handleSecondDayChange}
           onSubmitInvitation={handleSubmitInvitation}
         />

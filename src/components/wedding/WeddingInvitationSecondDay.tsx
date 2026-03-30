@@ -12,16 +12,17 @@ import {
   type InvitationDraft,
 } from './shared/invitationDraft'
 
+const INVITATION_SCROLL_TARGET_STORAGE_KEY = 'weddingInvitationScrollTarget'
+const FIRST_DAY_RSVP_SCROLL_TARGET = 'first-day-rsvp'
+
 type WeddingInvitationSecondDayProps = {
   draft: InvitationDraft
-  onGuestFullNameChange: (value: string) => void
   onSecondDayChange: (nextSecondDay: InvitationDraft['secondDay']) => void
   onSubmitInvitation: () => void
 }
 
 export function WeddingInvitationSecondDay({
   draft,
-  onGuestFullNameChange,
   onSecondDayChange,
   onSubmitInvitation,
 }: WeddingInvitationSecondDayProps) {
@@ -29,7 +30,8 @@ export function WeddingInvitationSecondDay({
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
   const [modalStatus, setModalStatus] = useState<'review' | 'success'>('review')
   const submissionPreview = buildInvitationSubmissionPayload(draft)
-  const shouldShowSecondDayDetails = draft.secondDay.attending !== 'no'
+  const isSecondDayDeclined = draft.secondDay.attending === 'no'
+  const shouldShowSecondDayDetails = draft.secondDay.isSubmitted && !isSecondDayDeclined
   const secondDayThemeRef = useRef<HTMLDivElement>(null)
   const guestName = submissionPreview['Имя и фамилия гостя']
   const firstDayPreview = Object.entries(submissionPreview).filter(([label]) =>
@@ -69,6 +71,10 @@ export function WeddingInvitationSecondDay({
   }
 
   const handleConfirmSubmit = () => {
+    onSecondDayChange({
+      ...draft.secondDay,
+      isSubmitted: true,
+    })
     onSubmitInvitation()
     setModalStatus('success')
 
@@ -76,13 +82,18 @@ export function WeddingInvitationSecondDay({
       setIsSummaryModalOpen(false)
       setModalStatus('review')
 
-      if (shouldShowSecondDayDetails) {
-        secondDayThemeRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
-      }
+      secondDayThemeRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
     }, 3000)
+  }
+
+  const handleReturnToFirstDay = () => {
+    window.sessionStorage.setItem(
+      INVITATION_SCROLL_TARGET_STORAGE_KEY,
+      FIRST_DAY_RSVP_SCROLL_TARGET,
+    )
   }
 
   return (
@@ -102,6 +113,7 @@ export function WeddingInvitationSecondDay({
 
       <a
         href="#/"
+        onClick={handleReturnToFirstDay}
         className="fixed left-3 top-3 z-20 inline-flex min-h-[42px] items-center gap-2 rounded-full border border-[#e8d3a3]/18 bg-[rgba(113,15,35,0.9)] px-3 py-2 text-[#f7f2eb] shadow-[0_10px_24px_rgba(0,0,0,0.22)] backdrop-blur-md transition hover:bg-[rgba(113,15,35,0.97)] sm:left-6 sm:top-6 sm:min-h-[50px] sm:px-4"
       >
         <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/16 bg-white/10 text-[14px] leading-none">
@@ -118,16 +130,14 @@ export function WeddingInvitationSecondDay({
       <main className="px-3 pb-5 pt-20 sm:px-5 sm:py-8 lg:px-7">
         <div className="mx-auto max-w-[560px] space-y-5">
           <RsvpSection
-            guestFullName={draft.guest.fullName}
             formState={draft.secondDay}
-            onGuestFullNameChange={onGuestFullNameChange}
             onChange={onSecondDayChange}
             onOpenSummary={handleOpenSummary}
           />
           {shouldShowSecondDayDetails ? (
             <>
               <div ref={secondDayThemeRef}>
-              <HeroSection />
+                <HeroSection />
               </div>
               <CelebrationSection />
               <VenueSection />
@@ -152,9 +162,9 @@ export function WeddingInvitationSecondDay({
                   УСПЕШНО
                 </div>
                 <p className="mt-4 max-w-[320px] text-[13px] leading-[1.65] text-[#281d17]/74 sm:text-[14px]">
-                  {shouldShowSecondDayDetails
-                    ? 'Спасибо за ваши ответы. Никуда не уходите, сейчас мы покажем вам тему второго дня.'
-                    : 'Спасибо за ваши ответы.'}
+                  {isSecondDayDeclined
+                    ? 'Спасибо за ваши ответы. Можете закрыть страницу.'
+                    : 'Спасибо за ваши ответы. Никуда не уходите, сейчас мы покажем вам тему второго дня.'}
                 </p>
               </div>
             ) : (
