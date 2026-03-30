@@ -12,7 +12,7 @@ export function TimelineSection() {
           </h2>
 
           <div className="mt-8 space-y-8">
-            {timelineItems.map((item) => (
+            {timelineItems.map((item, index) => (
               <div
                 key={item.time}
                 className="text-center"
@@ -20,13 +20,17 @@ export function TimelineSection() {
                 <div className="font-serifDisplay text-[38px] font-light leading-none tracking-[0.04em] text-[#f7f2eb]">
                   {item.time}
                 </div>
-                <div className="mt-2 text-[11px] uppercase tracking-[0.24em] text-white/64">
-                  {item.title}
-                </div>
+                {item.title ? (
+                  <div className="mt-2 text-[11px] uppercase tracking-[0.24em] text-white/64">
+                    {item.title}
+                  </div>
+                ) : null}
                 <p className="mx-auto mt-3 max-w-[330px] text-[13px] leading-[1.75] text-white/76">
                   {item.description}
                 </p>
-                <div className="mx-auto mt-6 h-8 w-px bg-white/20" />
+                {index < timelineItems.length - 1 ? (
+                  <div className="mx-auto mt-6 h-8 w-px bg-white/20" />
+                ) : null}
               </div>
             ))}
           </div>

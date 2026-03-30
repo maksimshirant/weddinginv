@@ -3,24 +3,14 @@ import { InviteCard } from '../shared/InviteCard'
 
 const secondDayTimelineItems = [
   {
-    time: '14:00',
-    title: 'Сбор гостей',
-    description: 'Встречаемся без лишнего официоза: объятия, разговоры, закуски и первый тост за молодых.',
-  },
-  {
     time: '16:00',
-    title: 'Застолье и тосты',
-    description: 'Большой стол, салаты как полагается, пожелания от всех поколений и атмосфера семейного праздника.',
+    title: 'Сбор гостей',
+    description: 'Встречаемся за первым тостом бабушкиного самогона дабы разогреть свои голосовые связки.',
   },
   {
-    time: '18:30',
-    title: 'Конкурсы и музыка',
-    description: 'Танцы, кричалки, неожиданные конкурсы и подборка треков, под которые невозможно усидеть на месте.',
-  },
-  {
-    time: '21:00',
-    title: 'Самое душевное',
-    description: 'К вечеру включается режим самых тёплых разговоров, фотографий на память и песен хором.',
+    time: '18:00',
+    title: 'Застолье и конкурсы',
+    description: 'Шашлык, соленья, самогон, каравай, танцы и т.д.',
   },
 ] as const
 
@@ -39,7 +29,7 @@ export function TimelineSection() {
           </h2>
 
           <div className="mt-8 space-y-8">
-            {secondDayTimelineItems.map((item) => (
+            {secondDayTimelineItems.map((item, index) => (
               <div
                 key={item.time}
                 className="text-center"
@@ -53,7 +43,9 @@ export function TimelineSection() {
                 <p className="mx-auto mt-3 max-w-[330px] text-[13px] leading-[1.75] text-white/76">
                   {item.description}
                 </p>
-                <div className="mx-auto mt-6 h-8 w-px bg-[#e7cf96]/24" />
+                {index < secondDayTimelineItems.length - 1 ? (
+                  <div className="mx-auto mt-6 h-8 w-px bg-[#e7cf96]/24" />
+                ) : null}
               </div>
             ))}
           </div>

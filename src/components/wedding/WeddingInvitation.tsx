@@ -6,6 +6,7 @@ import { RsvpSection } from './blocks/RsvpSection'
 import { TimelineSection } from './blocks/TimelineSection'
 import { WishesSection } from './blocks/WishesSection'
 import { VenueSection } from './blocks/VenueSection'
+import { FooterSection as ConnectionSection } from './blocks2/FooterSection'
 import { getPublicAssetUrl } from './shared/getPublicAssetUrl'
 import { type InvitationDraft } from './shared/invitationDraft'
 
@@ -77,8 +78,8 @@ export function WeddingInvitation({
         <main className="px-3 py-5 sm:px-5 sm:py-8 lg:px-7">
           <div className="mx-auto max-w-[560px] space-y-5">
             <HeroSection />
-            <VenueSection />
             <TimelineSection />
+            <VenueSection />
             <DressCodeSection />
             <WishesSection />
             <RsvpSection
@@ -88,6 +89,7 @@ export function WeddingInvitation({
               onChange={onFirstDayChange}
               onSave={handleSaveFirstDay}
             />
+            <ConnectionSection />
           </div>
         </main>
       )}

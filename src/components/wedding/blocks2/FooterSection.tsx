@@ -3,7 +3,7 @@ import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
 
 type FooterSectionProps = {
-  connectionSectionRef: RefObject<HTMLDivElement | null>
+  connectionSectionRef?: RefObject<HTMLDivElement | null>
 }
 
 export function FooterSection({
@@ -11,7 +11,10 @@ export function FooterSection({
 }: FooterSectionProps) {
   return (
     <div className="space-y-5">
-      <div ref={connectionSectionRef} id="second-day-connection">
+      <div
+        ref={connectionSectionRef}
+        id={connectionSectionRef ? 'second-day-connection' : undefined}
+      >
         <Reveal>
           <InviteCard
             variant="dark"
@@ -24,8 +27,7 @@ export function FooterSection({
                 СВЯЗЬ
               </h2>
               <p className="mx-auto mt-5 max-w-[360px] rounded-[2px] bg-[rgba(18,10,12,0.2)] px-4 py-4 text-[14px] leading-[1.75] text-white/82 backdrop-blur-[1px]">
-                Отдельный чат для второго дня добавим позже. Там будут
-                организационные детали, музыка и всё, что поможет поймать нужный вайб.
+              Отдельный чат для Ваших вопросов и фотографий, которые вы сделаете сами.
               </p>
               <button
                 type="button"

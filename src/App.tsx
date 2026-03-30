@@ -33,6 +33,15 @@ function App() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
   }, [route])
 
+  useEffect(() => {
+    if (route !== 'second-day' || draft.firstDay.isSaved) {
+      return
+    }
+
+    window.location.hash = '#/'
+    setRoute('main')
+  }, [draft.firstDay.isSaved, route])
+
   const handleGuestFullNameChange = (fullName: string) => {
     setDraft((current) => ({
       ...current,

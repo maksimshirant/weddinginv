@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { CelebrationSection } from './blocks2/CelebrationSection'
 import { DressCodeSection } from './blocks2/DressCodeSection'
-import { FooterSection } from './blocks2/FooterSection'
 import { HeroSection } from './blocks2/HeroSection'
 import { RsvpSection } from './blocks2/RsvpSection'
 import { TimelineSection } from './blocks2/TimelineSection'
@@ -27,10 +26,20 @@ export function WeddingInvitationSecondDay({
   onSubmitInvitation,
 }: WeddingInvitationSecondDayProps) {
   const backgroundImageSrc = getPublicAssetUrl('block2/фон.jpg')
-  const connectionSectionRef = useRef<HTMLDivElement>(null)
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
   const [modalStatus, setModalStatus] = useState<'review' | 'success'>('review')
   const submissionPreview = buildInvitationSubmissionPayload(draft)
+  const shouldShowSecondDayDetails = draft.secondDay.attending !== 'no'
+  const secondDayThemeRef = useRef<HTMLDivElement>(null)
+  const guestName = submissionPreview['Имя и фамилия гостя']
+  const firstDayPreview = Object.entries(submissionPreview).filter(([label]) =>
+    label.startsWith('Первый день:'),
+  )
+  const secondDayPreview = Object.entries(submissionPreview).filter(([label]) =>
+    label.startsWith('Второй день:'),
+  )
+
+  const formatPreviewLabel = (label: string) => label.split(': ')[1] ?? label
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
@@ -49,15 +58,6 @@ export function WeddingInvitationSecondDay({
     }
   }, [isSummaryModalOpen])
 
-  const handleSecondDaySubmitted = () => {
-    window.setTimeout(() => {
-      connectionSectionRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    }, 900)
-  }
-
   const handleOpenSummary = () => {
     setModalStatus('review')
     setIsSummaryModalOpen(true)
@@ -75,8 +75,14 @@ export function WeddingInvitationSecondDay({
     window.setTimeout(() => {
       setIsSummaryModalOpen(false)
       setModalStatus('review')
-      handleSecondDaySubmitted()
-    }, 2000)
+
+      if (shouldShowSecondDayDetails) {
+        secondDayThemeRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      }
+    }, 3000)
   }
 
   return (
@@ -108,12 +114,6 @@ export function WeddingInvitationSecondDay({
 
       <main className="px-3 pb-5 pt-20 sm:px-5 sm:py-8 lg:px-7">
         <div className="mx-auto max-w-[560px] space-y-5">
-          <HeroSection />
-          <CelebrationSection />
-          <VenueSection />
-          <TimelineSection />
-          <DressCodeSection />
-          <WishesSection />
           <RsvpSection
             guestFullName={draft.guest.fullName}
             formState={draft.secondDay}
@@ -121,7 +121,18 @@ export function WeddingInvitationSecondDay({
             onChange={onSecondDayChange}
             onOpenSummary={handleOpenSummary}
           />
-          <FooterSection connectionSectionRef={connectionSectionRef} />
+          {shouldShowSecondDayDetails ? (
+            <>
+              <div ref={secondDayThemeRef}>
+              <HeroSection />
+              </div>
+              <CelebrationSection />
+              <VenueSection />
+              <TimelineSection />
+              <DressCodeSection />
+              <WishesSection />
+            </>
+          ) : null}
         </div>
       </main>
 
@@ -138,7 +149,9 @@ export function WeddingInvitationSecondDay({
                   УСПЕШНО
                 </div>
                 <p className="mt-4 max-w-[320px] text-[13px] leading-[1.65] text-[#281d17]/74 sm:text-[14px]">
-                  Анкета отправлена. Через пару секунд вернём вас к блоку связи.
+                  {shouldShowSecondDayDetails
+                    ? 'Спасибо за ваши ответы. Никуда не уходите, сейчас мы покажем вам тему второго дня.'
+                    : 'Спасибо за ваши ответы.'}
                 </p>
               </div>
             ) : (
@@ -147,24 +160,61 @@ export function WeddingInvitationSecondDay({
                   ПРОВЕРЬТЕ АНКЕТУ
                 </h3>
                 <p className="mx-auto mt-2 max-w-[360px] text-center text-[12px] leading-[1.55] text-[#281d17]/72 sm:text-[13px]">
-                  Ниже собраны ответы по первому и второму дню. Здесь ничего не редактируется,
-                  только проверяется перед отправкой.
+                  Проверьте ответы перед отправкой. Первый и второй день разделены отдельно,
+                  чтобы ничего не перепутать.
                 </p>
 
-                <div className="mt-4 grid gap-2 min-[420px]:grid-cols-2">
-                  {Object.entries(submissionPreview).map(([label, value]) => (
-                    <div
-                      key={label}
-                      className="rounded-[2px] border border-[#a48658]/16 bg-[rgba(255,250,242,0.74)] px-3 py-[10px]"
-                    >
-                      <div className="text-[9px] uppercase tracking-[0.16em] text-[#281d17]/48 sm:text-[10px]">
-                        {label}
-                      </div>
-                      <div className="mt-1 text-[13px] leading-[1.4] text-[#281d17]/88 sm:text-[14px]">
-                        {value}
-                      </div>
+                <div className="mt-4 rounded-[2px] border border-[#a48658]/16 bg-[rgba(255,250,242,0.82)] px-4 py-3">
+                  <div className="text-[9px] uppercase tracking-[0.16em] text-[#281d17]/48 sm:text-[10px]">
+                    Гость
+                  </div>
+                  <div className="mt-1 text-[14px] leading-[1.4] text-[#281d17]/92 sm:text-[15px]">
+                    {guestName}
+                  </div>
+                </div>
+
+                <div className="mt-3 grid gap-3">
+                  <div className="rounded-[2px] border border-[#a48658]/16 bg-[rgba(255,250,242,0.74)] px-4 py-4">
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-[#710f23]/72">
+                      Первый день
                     </div>
-                  ))}
+                    <div className="mt-3 grid gap-2">
+                      {firstDayPreview.map(([label, value]) => (
+                        <div
+                          key={label}
+                          className="rounded-[2px] border border-[#a48658]/14 bg-white/44 px-3 py-[10px]"
+                        >
+                          <div className="text-[9px] uppercase tracking-[0.16em] text-[#281d17]/48 sm:text-[10px]">
+                            {formatPreviewLabel(label)}
+                          </div>
+                          <div className="mt-1 text-[13px] leading-[1.45] text-[#281d17]/88 sm:text-[14px]">
+                            {value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-[2px] border border-[#a48658]/16 bg-[rgba(255,250,242,0.74)] px-4 py-4">
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-[#710f23]/72">
+                      Второй день
+                    </div>
+                    <div className="mt-3 grid gap-2">
+                      {secondDayPreview.map(([label, value]) => (
+                        <div
+                          key={label}
+                          className="rounded-[2px] border border-[#a48658]/14 bg-white/44 px-3 py-[10px]"
+                        >
+                          <div className="text-[9px] uppercase tracking-[0.16em] text-[#281d17]/48 sm:text-[10px]">
+                            {formatPreviewLabel(label)}
+                          </div>
+                          <div className="mt-1 text-[13px] leading-[1.45] text-[#281d17]/88 sm:text-[14px]">
+                            {value}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-4 grid gap-2 sm:grid-cols-2">

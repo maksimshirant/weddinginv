@@ -1,4 +1,4 @@
-import { drinkOptions } from '../data'
+import { drinkOptions, firstDayToastOptions } from '../data'
 
 export type Attending = '' | 'yes' | 'no'
 
@@ -22,7 +22,7 @@ export type InvitationSubmissionPayload = {
   'Имя и фамилия гостя': string
   'Первый день: участие': string
   'Второй день: участие': string
-  'Первый день: напитки'?: string
+  'Первый день: желаете ли Вы выпить за молодых?'?: string
   'Второй день: напитки'?: string
 }
 
@@ -53,6 +53,10 @@ const drinkLabels = new Map<string, string>(
   drinkOptions.map((option) => [option.value, option.label]),
 )
 
+const firstDayToastLabels = new Map<string, string>(
+  firstDayToastOptions.map((option) => [option.value, option.label]),
+)
+
 function formatAttending(value: Attending): string {
   return attendingLabels[value]
 }
@@ -77,21 +81,31 @@ function formatDrinks(drinks: string[], otherDrink: string): string {
   return formattedDrinks.join(', ')
 }
 
+function formatFirstDayToast(drinks: string[]): string {
+  const value = drinks[0]
+
+  if (!value) {
+    return 'Не указано'
+  }
+
+  return firstDayToastLabels.get(value) ?? value
+}
+
 export function buildInvitationSubmissionPayload(
   draft: InvitationDraft,
 ): InvitationSubmissionPayload {
-  const payload: InvitationSubmissionPayload = {
-    'Имя и фамилия гостя': draft.guest.fullName.trim(),
-    'Первый день: участие': formatAttending(draft.firstDay.attending),
-    'Второй день: участие': formatAttending(draft.secondDay.attending),
-  }
+  const payload = {} as InvitationSubmissionPayload
+
+  payload['Имя и фамилия гостя'] = draft.guest.fullName.trim()
+  payload['Первый день: участие'] = formatAttending(draft.firstDay.attending)
 
   if (draft.firstDay.attending !== 'no') {
-    payload['Первый день: напитки'] = formatDrinks(
+    payload['Первый день: желаете ли Вы выпить за молодых?'] = formatFirstDayToast(
       draft.firstDay.drinks,
-      draft.firstDay.otherDrink,
     )
   }
+
+  payload['Второй день: участие'] = formatAttending(draft.secondDay.attending)
 
   if (draft.secondDay.attending !== 'no') {
     payload['Второй день: напитки'] = formatDrinks(

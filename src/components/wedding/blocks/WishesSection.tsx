@@ -11,18 +11,15 @@ export function WishesSection() {
       <InviteCard variant="dark" className="px-8 py-12 sm:px-10">
         <div className="text-center">
           <h2 className="font-serifDisplay text-[42px] font-light uppercase leading-[0.95] tracking-[0.08em] text-[#f7f2eb] sm:text-[48px]">
-            ДЕТАЛИ
+            ПОЖЕЛАНИЕ
           </h2>
 
           <div className="mt-8 space-y-8">
-            {wishes.map((wish, index) => (
+            {wishes.map((wish) => (
               <div
                 key={wish.title}
-                className="grid grid-cols-[48px_1fr] gap-4 text-left"
+                className="text-left"
               >
-                <div className="font-serifDisplay text-[46px] leading-none text-[#f7f2eb]/84">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
                 <div>
                   <h3 className="font-serifDisplay text-[26px] font-light uppercase tracking-[0.08em] text-[#f7f2eb]">
                     {wish.title}

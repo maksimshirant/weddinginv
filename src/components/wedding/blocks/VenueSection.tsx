@@ -3,6 +3,7 @@ import { InviteCard } from '../shared/InviteCard'
 import { getPublicAssetUrl } from '../shared/getPublicAssetUrl'
 
 export function VenueSection() {
+  const meetingImageSrc = getPublicAssetUrl('meeting.jpeg')
   const venueImageSrc = getPublicAssetUrl('place.jpg')
 
   return (
@@ -12,10 +13,36 @@ export function VenueSection() {
           <h2 className="font-serifDisplay text-[42px] font-light uppercase leading-[0.95] tracking-[0.08em] text-[#201d1a] sm:text-[48px]">
             МЕСТО
             <br />
-            ПРОВЕДЕНИЯ
+           ВСТРЕЧИ И ПРОВЕДЕНИЯ
           </h2>
 
           <div className="mt-8 space-y-10">
+            <div className="space-y-4">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-[#201d1a]/50">
+                Место встречи
+              </p>
+              <p className="mx-auto max-w-[340px] text-[15px] font-light leading-[1.65] text-[#201d1a]/80">
+                Hilton Garden Inn
+                <br />
+                Волгоград, просп. имени В.И. Ленина, 56А
+              </p>
+              <div className="aspect-[853/960] overflow-hidden rounded-[2px]">
+                <img
+                  src={meetingImageSrc}
+                  alt="Место встречи гостей"
+                  className="h-full w-full object-cover object-top"
+                />
+              </div>
+              <a
+                href="https://yandex.ru/maps/?text=Hilton%20Garden%20Inn%2C%20%D0%92%D0%BE%D0%BB%D0%B3%D0%BE%D0%B3%D1%80%D0%B0%D0%B4%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF.%20%D0%B8%D0%BC%D0%B5%D0%BD%D0%B8%20%D0%92.%D0%98.%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%2C%2056%D0%90"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-[50px] w-full items-center justify-center rounded-full border border-[#201d1a]/28 bg-transparent px-6 text-[12px] uppercase tracking-[0.2em] text-[#201d1a] transition hover:bg-[#201d1a] hover:text-[#f6f0e7]"
+              >
+                Открыть карту
+              </a>
+            </div>
+
             <div className="space-y-4">
               <p className="text-[11px] uppercase tracking-[0.22em] text-[#201d1a]/50">
                 Церемония

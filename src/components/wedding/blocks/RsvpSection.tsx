@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { drinkOptions } from '../data'
+import { useEffect, useEffectEvent, useState } from 'react'
+import { firstDayToastOptions } from '../data'
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
 import { type InvitationDraft } from '../shared/invitationDraft'
@@ -22,7 +22,24 @@ export function RsvpSection({
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
   const [isDrinksErrorVisible, setIsDrinksErrorVisible] = useState(false)
   const shouldShowDrinks = formState.attending !== 'no'
-  const isOtherDrinkSelected = formState.drinks.includes('other')
+  const selectedToastOption = formState.drinks[0] ?? ''
+  const handleSave = useEffectEvent(() => {
+    onSave()
+  })
+
+  useEffect(() => {
+    if (submissionStatus !== 'success') {
+      return
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      handleSave()
+    }, 1000)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [submissionStatus])
 
   useEffect(() => {
     if (submissionStatus !== 'submitting') {
@@ -38,32 +55,13 @@ export function RsvpSection({
     }
   }, [submissionStatus])
 
-  useEffect(() => {
-    if (submissionStatus !== 'success') {
-      return
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      onSave()
-    }, 1000)
-
-    return () => {
-      window.clearTimeout(timeoutId)
-    }
-  }, [onSave, submissionStatus])
-
-  const handleDrinkToggle = (value: string) => {
+  const handleToastOptionChange = (value: string) => {
     setIsDrinksErrorVisible(false)
 
     onChange({
       ...formState,
-      drinks: formState.drinks.includes(value)
-        ? formState.drinks.filter((item) => item !== value)
-        : [...formState.drinks, value],
-      otherDrink:
-        value === 'other' && formState.drinks.includes(value)
-          ? ''
-          : formState.otherDrink,
+      drinks: [value],
+      otherDrink: '',
     })
   }
 
@@ -167,54 +165,29 @@ export function RsvpSection({
                 {shouldShowDrinks ? (
                   <fieldset disabled={submissionStatus === 'submitting'}>
                     <legend className="block text-[10px] uppercase tracking-[0.24em] text-[#201d1a]/46">
-                      Напитки на первый день
+                      Желаете ли Вы выпить за молодых?
                     </legend>
-                    <p className="mt-2 text-[13px] font-light text-[#201d1a]/42">
-                      Можно выбрать несколько вариантов
-                    </p>
                     <div className="mt-4 grid gap-3">
-                      {drinkOptions.map((option) => (
+                      {firstDayToastOptions.map((option) => (
                         <label
                           key={option.value}
                           className="flex cursor-pointer items-center gap-3 text-[15px] text-[#201d1a]/82"
                         >
                           <input
-                            type="checkbox"
-                            name="firstDayDrinks"
+                            type="radio"
+                            name="firstDayToast"
                             value={option.value}
-                            checked={formState.drinks.includes(option.value)}
-                            onChange={() => handleDrinkToggle(option.value)}
+                            checked={selectedToastOption === option.value}
+                            onChange={() => handleToastOptionChange(option.value)}
                             className="h-[18px] w-[18px] accent-[#7a1023]"
                           />
                           <span>{option.label}</span>
                         </label>
                       ))}
                     </div>
-                    {isOtherDrinkSelected ? (
-                      <div className="mt-5">
-                        <label className="block text-[10px] uppercase tracking-[0.24em] text-[#201d1a]/46">
-                          Свой напиток на первый день
-                        </label>
-                        <input
-                          type="text"
-                          name="firstDayOtherDrink"
-                          value={formState.otherDrink}
-                          onChange={(event) =>
-                            onChange({
-                              ...formState,
-                              otherDrink: event.target.value,
-                            })
-                          }
-                          required={isOtherDrinkSelected}
-                          disabled={submissionStatus === 'submitting'}
-                          placeholder="Напишите напиток"
-                          className="mt-3 w-full border-0 border-b border-[#201d1a]/22 bg-transparent px-0 pb-3 pt-1 text-[15px] text-[#201d1a] placeholder:text-[#201d1a]/36 outline-none transition focus:border-[#7a1023] disabled:cursor-wait disabled:opacity-60"
-                        />
-                      </div>
-                    ) : null}
                     {isDrinksErrorVisible ? (
                       <p className="mt-4 text-[12px] leading-[1.5] text-[#7a1023]">
-                        Если вы подтверждаете присутствие, выберите хотя бы один напиток.
+                        Если вы подтверждаете присутствие, выберите один вариант ответа.
                       </p>
                     ) : null}
                   </fieldset>

@@ -66,8 +66,7 @@ export function HeroSection() {
             </h2>
 
             <p className="mx-auto mt-6 max-w-[360px] text-[13px] leading-[1.8] text-white/84">
-              Будем счастливы разделить этот день вместе с вами. Отмечайте дату
-              и сохраняйте настроение праздника.
+            Отмечайте дату и сохраняйте настроение праздника. Мы верим, что счастье становится полным, когда им делятся с самыми близкими. 
             </p>
 
             <div className="mx-auto mt-10 max-w-[340px] border-t border-white/18 pt-6">
@@ -86,16 +85,29 @@ export function HeroSection() {
                 {mayGrid.map((day, index) => (
                   <div key={`${day ?? 'empty'}-${index}`} className="flex h-8 items-center justify-center">
                     {day ? (
-                      <span
-                        className={[
-                          'flex h-8 w-8 items-center justify-center rounded-full text-[13px] font-light',
-                          day === 5
-                            ? 'border border-[#f6f0e7] text-[#f6f0e7]'
-                            : 'text-white/78',
-                        ].join(' ')}
-                      >
-                        {day}
-                      </span>
+                      day === 5 ? (
+                        <span className="relative flex h-9 w-9 items-center justify-center text-[13px] font-light text-[#f6f0e7]">
+                          <svg
+                            aria-hidden="true"
+                            viewBox="0 0 32 29"
+                            className="absolute inset-0 h-full w-full"
+                            fill="none"
+                          >
+                            <path
+                              d="M16 27.2 3.7 14.9a7.8 7.8 0 0 1 0-11 7.1 7.1 0 0 1 10.4 0L16 5.8l1.9-1.9a7.1 7.1 0 0 1 10.4 0 7.8 7.8 0 0 1 0 11Z"
+                              stroke="currentColor"
+                              strokeWidth="0.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          <span className="relative z-10">{day}</span>
+                        </span>
+                      ) : (
+                        <span className="flex h-8 w-8 items-center justify-center text-[13px] font-light text-white/78">
+                          {day}
+                        </span>
+                      )
                     ) : null}
                   </div>
                 ))}

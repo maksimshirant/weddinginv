@@ -1,19 +1,18 @@
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
-import { PlaceholderImage } from '../shared/PlaceholderImage'
 
 const secondDayDetails = [
   {
-    title: 'Погромче',
-    description: 'В этот день можно и нужно петь знакомые песни, поддерживать тосты и не стесняться громких поздравлений.',
+    title: 'Пойте от души',
+    description: 'В этот день вы обязаны во все горло петь знакомые песни, поднимать тосты за молодых и не стесняться душевных поздравлений.',
   },
   {
-    title: 'Понаряднее',
-    description: 'Не бойтесь сделать образ ярче: второй день задуман более свободным, театральным и чуть ностальгическим.',
+    title: 'Ярче образ',
+    description: 'Сделайте образ как можно ярче, не бойтесь добавить чуточку баловства в ваш наряд.',
   },
   {
-    title: 'Подушевнее',
-    description: 'Главное здесь не идеальность, а настроение: семейность, тепло, смех за столом и старые добрые танцы.',
+    title: 'Все по-взрослому',
+    description: 'Громкая музыка, откровенные шутки не для детей, вход по паспорту.',
   },
 ] as const
 
@@ -32,14 +31,11 @@ export function WishesSection() {
           </h2>
 
           <div className="mt-8 space-y-8">
-            {secondDayDetails.map((wish, index) => (
+            {secondDayDetails.map((wish) => (
               <div
                 key={wish.title}
-                className="grid grid-cols-[48px_1fr] gap-4 text-left"
+                className="text-left"
               >
-                <div className="font-serifDisplay text-[46px] leading-none text-[#f0dbab]/84">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
                 <div>
                   <h3 className="font-serifDisplay text-[26px] font-light uppercase tracking-[0.08em] text-[#f7f2eb]">
                     {wish.title}
@@ -50,14 +46,6 @@ export function WishesSection() {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="mt-10">
-            <PlaceholderImage
-              label="[Афиша второго дня: тосты, музыка, кассеты и свадебная ностальгия]"
-              tone="dark"
-              className="aspect-[16/9] rounded-[2px]"
-            />
           </div>
         </div>
       </InviteCard>
