@@ -89,7 +89,7 @@ export function parseInvitationDraft(value: string | null): InvitationDraft {
       },
       secondDay: {
         ...sanitizeDayRsvpState(parsed.secondDay),
-        isSubmitted: false,
+        isSubmitted: Boolean(parsed.secondDay?.isSubmitted),
       },
     }
   } catch {

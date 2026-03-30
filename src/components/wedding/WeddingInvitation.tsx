@@ -32,6 +32,8 @@ export function WeddingInvitation({
   const [isEnvelopeOpening, setIsEnvelopeOpening] = useState(false)
   const backgroundImageSrc = getPublicAssetUrl('фон.jpg')
   const secondDayBackgroundImageSrc = getPublicAssetUrl('block2/фон.jpg')
+  const isInvitationSubmitted = draft.secondDay.isSubmitted
+  const shouldShowSecondDayButton = isInvitationSubmitted && draft.secondDay.attending === 'yes'
 
   useEffect(() => {
     window.sessionStorage.setItem('weddingInvitationOpen', String(isInvitationOpen))
@@ -111,23 +113,43 @@ export function WeddingInvitation({
           onOpen={handleOpenEnvelope}
         />
       ) : (
-        <main className="px-3 py-5 sm:px-5 sm:py-8 lg:px-7">
-          <div className="mx-auto max-w-[560px] space-y-5">
-            <HeroSection />
-            <TimelineSection />
-            <VenueSection />
-            <DressCodeSection />
-            <WishesSection />
-            <ConnectionSection />
-            <RsvpSection
-              guestFullName={draft.guest.fullName}
-              formState={draft.firstDay}
-              onGuestFullNameChange={onGuestFullNameChange}
-              onChange={onFirstDayChange}
-              onSave={handleSaveFirstDay}
-            />
-          </div>
-        </main>
+        <>
+          {shouldShowSecondDayButton ? (
+            <a
+              href="#/second-day"
+              className="fixed bottom-3 right-3 z-20 inline-flex min-h-[42px] items-center gap-2 rounded-full border border-[#e8d3a3]/18 bg-[rgba(113,15,35,0.9)] px-3 py-2 text-[#f7f2eb] shadow-[0_10px_24px_rgba(0,0,0,0.22)] backdrop-blur-md transition hover:bg-[rgba(113,15,35,0.97)] sm:bottom-6 sm:right-6 sm:min-h-[50px] sm:px-4"
+            >
+              <span className="text-[10px] uppercase tracking-[0.14em] sm:hidden">
+                Второй день
+              </span>
+              <span className="hidden text-[10px] uppercase tracking-[0.18em] sm:inline">
+                Перейти ко второму дню
+              </span>
+              <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/16 bg-white/10 text-[14px] leading-none">
+                →
+              </span>
+            </a>
+          ) : null}
+
+          <main className="px-3 py-5 sm:px-5 sm:py-8 lg:px-7">
+            <div className="mx-auto max-w-[560px] space-y-5">
+              <HeroSection />
+              <TimelineSection />
+              <VenueSection />
+              <DressCodeSection />
+              <WishesSection />
+              <ConnectionSection />
+              <RsvpSection
+                guestFullName={draft.guest.fullName}
+                formState={draft.firstDay}
+                isInvitationSubmitted={isInvitationSubmitted}
+                onGuestFullNameChange={onGuestFullNameChange}
+                onChange={onFirstDayChange}
+                onSave={handleSaveFirstDay}
+              />
+            </div>
+          </main>
+        </>
       )}
     </div>
   )

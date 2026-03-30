@@ -18,8 +18,13 @@ export function RsvpSection({
   const [isDrinksErrorVisible, setIsDrinksErrorVisible] = useState(false)
   const shouldShowDrinks = formState.attending !== 'no'
   const isOtherDrinkSelected = formState.drinks.includes('other')
+  const isFormDisabled = formState.isSubmitted
 
   const handleDrinkToggle = (value: string) => {
+    if (isFormDisabled) {
+      return
+    }
+
     setIsDrinksErrorVisible(false)
 
     onChange({
@@ -35,6 +40,10 @@ export function RsvpSection({
   }
 
   const handleAttendingChange = (value: InvitationDraft['secondDay']['attending']) => {
+    if (isFormDisabled) {
+      return
+    }
+
     setIsDrinksErrorVisible(false)
 
     onChange({
@@ -47,6 +56,10 @@ export function RsvpSection({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (isFormDisabled) {
+      return
+    }
 
     if (formState.attending === 'yes' && formState.drinks.length === 0) {
       setIsDrinksErrorVisible(true)
@@ -74,7 +87,7 @@ export function RsvpSection({
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-8">
-            <fieldset>
+            <fieldset disabled={isFormDisabled}>
               <legend className="block text-[10px] uppercase tracking-[0.24em] text-[#281d17]/56">
                 Участие во втором дне
               </legend>
@@ -105,7 +118,7 @@ export function RsvpSection({
             </fieldset>
 
             {shouldShowDrinks ? (
-              <fieldset>
+              <fieldset disabled={isFormDisabled}>
                 <legend className="block text-[10px] uppercase tracking-[0.24em] text-[#281d17]/56">
                   Напитки на второй день
                 </legend>
@@ -161,10 +174,17 @@ export function RsvpSection({
 
             <button
               type="submit"
+              disabled={isFormDisabled}
               className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-full border border-[#710f23] bg-[#710f23] px-6 text-[12px] uppercase tracking-[0.2em] text-[#f7f1e8] transition hover:bg-[#5f0c1d]"
             >
-              Проверить и отправить
+              {isFormDisabled ? 'Анкета отправлена' : 'Проверить и отправить'}
             </button>
+
+            {isFormDisabled ? (
+              <p className="text-center text-[12px] uppercase tracking-[0.16em] text-[#710f23]/76">
+                Ответы по обоим дням уже отправлены
+              </p>
+            ) : null}
           </form>
         </div>
       </InviteCard>

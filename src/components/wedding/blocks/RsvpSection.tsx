@@ -7,6 +7,7 @@ import { type InvitationDraft } from '../shared/invitationDraft'
 type RsvpSectionProps = {
   guestFullName: string
   formState: InvitationDraft['firstDay']
+  isInvitationSubmitted: boolean
   onGuestFullNameChange: (value: string) => void
   onChange: (nextFormState: InvitationDraft['firstDay']) => void
   onSave: () => void
@@ -15,6 +16,7 @@ type RsvpSectionProps = {
 export function RsvpSection({
   guestFullName,
   formState,
+  isInvitationSubmitted,
   onGuestFullNameChange,
   onChange,
   onSave,
@@ -23,6 +25,7 @@ export function RsvpSection({
   const [isDrinksErrorVisible, setIsDrinksErrorVisible] = useState(false)
   const shouldShowDrinks = formState.attending !== 'no'
   const selectedToastOption = formState.drinks[0] ?? ''
+  const isFormDisabled = isInvitationSubmitted || submissionStatus === 'submitting'
   const handleSave = useEffectEvent(() => {
     onSave()
   })
@@ -79,6 +82,10 @@ export function RsvpSection({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
+    if (isInvitationSubmitted) {
+      return
+    }
+
     if (formState.attending === 'yes' && formState.drinks.length === 0) {
       setIsDrinksErrorVisible(true)
       return
@@ -95,7 +102,7 @@ export function RsvpSection({
     <Reveal>
       <InviteCard variant="light" className="px-8 py-12 sm:px-10">
         <div id="rsvp-card">
-          {submissionStatus === 'success' ? (
+          {submissionStatus === 'success' && !isInvitationSubmitted ? (
             <div className="flex min-h-[520px] flex-col items-center justify-center text-center">
               <div className="font-serifDisplay text-[52px] font-light uppercase leading-none tracking-[0.06em] text-[#201d1a]">
                 УСПЕШНО
@@ -127,12 +134,12 @@ export function RsvpSection({
                     onChange={(event) => onGuestFullNameChange(event.target.value)}
                     required
                     placeholder="Иван Иванов"
-                    disabled={submissionStatus === 'submitting'}
+                    disabled={isFormDisabled}
                     className="mt-3 w-full border-0 border-b border-[#201d1a]/22 bg-transparent px-0 pb-3 pt-1 text-[16px] text-[#201d1a] placeholder:text-[#201d1a]/36 outline-none transition focus:border-[#7a1023] disabled:cursor-wait disabled:opacity-60 sm:text-[15px]"
                   />
                 </div>
 
-                <fieldset disabled={submissionStatus === 'submitting'}>
+                <fieldset disabled={isFormDisabled}>
                   <legend className="block text-[10px] uppercase tracking-[0.24em] text-[#201d1a]/46">
                     Участие в первом дне
                   </legend>
@@ -163,7 +170,7 @@ export function RsvpSection({
                 </fieldset>
 
                 {shouldShowDrinks ? (
-                  <fieldset disabled={submissionStatus === 'submitting'}>
+                  <fieldset disabled={isFormDisabled}>
                     <legend className="block text-[10px] uppercase tracking-[0.24em] text-[#201d1a]/46">
                       Желаете ли Вы выпить за молодых?
                     </legend>
@@ -195,15 +202,21 @@ export function RsvpSection({
 
                 <button
                   type="submit"
-                  disabled={submissionStatus === 'submitting'}
+                  disabled={isFormDisabled}
                   className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-full border border-[#7a1023] bg-[#7a1023] px-6 text-[12px] uppercase tracking-[0.2em] text-[#f7f1e8] transition hover:bg-[#620a1a] disabled:cursor-wait disabled:bg-[#8a4052] disabled:hover:bg-[#8a4052]"
                 >
-                  {submissionStatus === 'submitting'
+                  {isInvitationSubmitted
+                    ? 'Анкета отправлена'
+                    : submissionStatus === 'submitting'
                     ? 'Сохраняем...'
                     : 'Сохранить и перейти ко второму дню'}
                 </button>
 
-                {formState.isSaved ? (
+                {isInvitationSubmitted ? (
+                  <p className="text-center text-[12px] uppercase tracking-[0.16em] text-[#7a1023]/76">
+                    Ответы по обоим дням уже отправлены
+                  </p>
+                ) : formState.isSaved ? (
                   <p className="text-center text-[12px] uppercase tracking-[0.16em] text-[#7a1023]/76">
                     Ответы по первому дню сохранены
                   </p>

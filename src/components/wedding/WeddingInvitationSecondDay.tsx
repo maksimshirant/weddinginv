@@ -61,6 +61,10 @@ export function WeddingInvitationSecondDay({
   }, [isSummaryModalOpen])
 
   const handleOpenSummary = () => {
+    if (draft.secondDay.isSubmitted) {
+      return
+    }
+
     setModalStatus('review')
     setIsSummaryModalOpen(true)
   }
@@ -71,6 +75,10 @@ export function WeddingInvitationSecondDay({
   }
 
   const handleConfirmSubmit = () => {
+    if (draft.secondDay.isSubmitted) {
+      return
+    }
+
     onSecondDayChange({
       ...draft.secondDay,
       isSubmitted: true,
