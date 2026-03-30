@@ -128,7 +128,7 @@ export function RsvpSection({
                     required
                     placeholder="Иван Иванов"
                     disabled={submissionStatus === 'submitting'}
-                    className="mt-3 w-full border-0 border-b border-[#201d1a]/22 bg-transparent px-0 pb-3 pt-1 text-[15px] text-[#201d1a] placeholder:text-[#201d1a]/36 outline-none transition focus:border-[#7a1023] disabled:cursor-wait disabled:opacity-60"
+                    className="mt-3 w-full border-0 border-b border-[#201d1a]/22 bg-transparent px-0 pb-3 pt-1 text-[16px] text-[#201d1a] placeholder:text-[#201d1a]/36 outline-none transition focus:border-[#7a1023] disabled:cursor-wait disabled:opacity-60 sm:text-[15px]"
                   />
                 </div>
 

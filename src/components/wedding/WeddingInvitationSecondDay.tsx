@@ -91,6 +91,9 @@ export function WeddingInvitationSecondDay({
         <img
           src={backgroundImageSrc}
           alt=""
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,240,205,0.12),rgba(101,20,33,0.2)_18%,rgba(42,53,34,0.24)_38%,rgba(33,18,20,0.68)_58%,rgba(16,11,12,0.86)_100%)]" />

@@ -89,7 +89,7 @@ export function RsvpSection({
                 onChange={(event) => onGuestFullNameChange(event.target.value)}
                 required
                 placeholder="Иван Иванов"
-                className="mt-3 w-full rounded-[2px] border border-[#a48658]/34 bg-[rgba(255,250,242,0.88)] px-4 py-3 text-[15px] text-[#281d17] placeholder:text-[#281d17]/42 outline-none transition focus:border-[#710f23] focus:bg-white"
+                className="mt-3 w-full rounded-[2px] border border-[#a48658]/34 bg-[rgba(255,250,242,0.88)] px-4 py-3 text-[16px] text-[#281d17] placeholder:text-[#281d17]/42 outline-none transition focus:border-[#710f23] focus:bg-white sm:text-[15px]"
               />
             </div>
 
@@ -166,7 +166,7 @@ export function RsvpSection({
                       }
                       required={isOtherDrinkSelected}
                       placeholder="Напишите напиток"
-                      className="mt-3 w-full rounded-[2px] border border-[#a48658]/34 bg-[rgba(255,250,242,0.88)] px-4 py-3 text-[15px] text-[#281d17] placeholder:text-[#281d17]/42 outline-none transition focus:border-[#710f23] focus:bg-white"
+                      className="mt-3 w-full rounded-[2px] border border-[#a48658]/34 bg-[rgba(255,250,242,0.88)] px-4 py-3 text-[16px] text-[#281d17] placeholder:text-[#281d17]/42 outline-none transition focus:border-[#710f23] focus:bg-white sm:text-[15px]"
                     />
                   </div>
                 ) : null}

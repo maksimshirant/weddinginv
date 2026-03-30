@@ -28,10 +28,29 @@ export function WeddingInvitation({
   ))
   const [isEnvelopeOpening, setIsEnvelopeOpening] = useState(false)
   const backgroundImageSrc = getPublicAssetUrl('фон.jpg')
+  const secondDayBackgroundImageSrc = getPublicAssetUrl('block2/фон.jpg')
 
   useEffect(() => {
     window.sessionStorage.setItem('weddingInvitationOpen', String(isInvitationOpen))
   }, [isInvitationOpen])
+
+  useEffect(() => {
+    const preloadLinkId = 'second-day-background-preload'
+    let preloadLink = document.getElementById(preloadLinkId) as HTMLLinkElement | null
+
+    if (!preloadLink) {
+      preloadLink = document.createElement('link')
+      preloadLink.id = preloadLinkId
+      preloadLink.rel = 'preload'
+      preloadLink.as = 'image'
+      preloadLink.href = secondDayBackgroundImageSrc
+      document.head.appendChild(preloadLink)
+    }
+
+    const image = new Image()
+    image.decoding = 'async'
+    image.src = secondDayBackgroundImageSrc
+  }, [secondDayBackgroundImageSrc])
 
   useEffect(() => {
     if (!isInvitationOpen) {

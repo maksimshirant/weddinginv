@@ -13,7 +13,7 @@ export function VenueSection() {
           <h2 className="font-serifDisplay text-[42px] font-light uppercase leading-[0.95] tracking-[0.08em] text-[#201d1a] sm:text-[48px]">
             МЕСТО
             <br />
-           ВСТРЕЧИ И ПРОВЕДЕНИЯ
+           ВСТРЕЧИ И ЦЕРЕМОНИИ
           </h2>
 
           <div className="mt-8 space-y-10">
