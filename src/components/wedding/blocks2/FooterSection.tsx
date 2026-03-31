@@ -29,13 +29,14 @@ export function FooterSection({
               <p className="mx-auto mt-5 max-w-[360px] rounded-[2px] bg-[rgba(18,10,12,0.2)] px-4 py-4 text-[14px] leading-[1.75] text-white/82 backdrop-blur-[1px]">
               Отдельный чат для Ваших вопросов и фотографий, которые вы сделаете сами.
               </p>
-              <button
-                type="button"
-                disabled
-                className="mt-8 inline-flex min-h-[50px] w-full cursor-default items-center justify-center rounded-full border border-[#e8d3a3]/26 bg-transparent px-6 text-[12px] uppercase tracking-[0.2em] text-[#f7f1e8] opacity-100"
+              <a
+                href="https://t.me/+qzNl2XLXU-c5ODli"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-8 inline-flex min-h-[50px] w-full items-center justify-center rounded-full border border-[#e8d3a3]/26 bg-transparent px-6 text-[12px] uppercase tracking-[0.2em] text-[#f7f1e8] transition hover:bg-white/10"
               >
-                Скоро откроем чат
-              </button>
+                Перейти в чат
+              </a>
             </div>
           </InviteCard>
         </Reveal>
