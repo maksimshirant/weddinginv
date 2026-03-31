@@ -1,8 +1,15 @@
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
-import { PlaceholderImage } from '../shared/PlaceholderImage'
+import { getPublicAssetUrl } from '../shared/getPublicAssetUrl'
+
+const secondDayVenueAddress =
+  'Волгоградская обл., Городищенский р-н, Ерзовское городское поселение, СНТ Титан, 762'
+const secondDayVenueMapQuery = encodeURIComponent(secondDayVenueAddress)
+const secondDayVenueMapHref = `https://yandex.ru/maps/?text=${secondDayVenueMapQuery}`
 
 export function VenueSection() {
+  const secondDayVenueImageSrc = getPublicAssetUrl('день2место.png')
+
   return (
     <Reveal>
       <InviteCard
@@ -19,24 +26,28 @@ export function VenueSection() {
           </h2>
 
           <div className="mt-8 space-y-10">
-            <div className="space-y-4 rounded-[2px] border border-[#7f1730]/12 bg-[rgba(255,250,241,0.54)] px-5 py-6">
-              <p className="mx-auto max-w-[340px] text-[15px] font-light leading-[1.65] text-[#281d17]/82">
-                Здесь будет точная локация второго дня:
-                <br />
-                зал, двор или веранда с настоящим настроением свадьбы девяностых.
+            <div className="space-y-4">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-[#281d17]/50">
+                Место застолья
               </p>
-              <PlaceholderImage
-                label="[Фото площадки для банкета 90-х скоро появится]"
-                tone="light"
-                className="aspect-[16/10] rounded-[2px]"
-              />
-              <button
-                type="button"
-                disabled
-                className="inline-flex min-h-[50px] w-full cursor-default items-center justify-center rounded-full border border-[#710f23] bg-[#710f23] px-6 text-[12px] uppercase tracking-[0.2em] text-[#f7f1e8] opacity-100"
+              <p className="mx-auto max-w-[360px] text-pretty text-[15px] font-light leading-[1.65] text-[#281d17]/80">
+                {secondDayVenueAddress}
+              </p>
+              <div className="aspect-[853/960] overflow-hidden rounded-[2px]">
+                <img
+                  src={secondDayVenueImageSrc}
+                  alt="Место проведения второго дня"
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+              <a
+                href={secondDayVenueMapHref}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-[50px] w-full items-center justify-center rounded-full border border-[#281d17]/28 bg-transparent px-6 text-[12px] uppercase tracking-[0.2em] text-[#281d17] transition hover:bg-[#281d17] hover:text-[#f6f0e7]"
               >
-                Скоро добавим точку сбора
-              </button>
+                Открыть карту
+              </a>
             </div>
           </div>
         </div>

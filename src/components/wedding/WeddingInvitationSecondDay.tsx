@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { CelebrationSection } from './blocks2/CelebrationSection'
+import { ClosingSection } from './blocks2/ClosingSection'
 import { DressCodeSection } from './blocks2/DressCodeSection'
 import { HeroSection } from './blocks2/HeroSection'
 import { RsvpSection } from './blocks2/RsvpSection'
@@ -152,6 +153,7 @@ export function WeddingInvitationSecondDay({
               <TimelineSection />
               <DressCodeSection />
               <WishesSection />
+              <ClosingSection />
             </>
           ) : null}
         </div>

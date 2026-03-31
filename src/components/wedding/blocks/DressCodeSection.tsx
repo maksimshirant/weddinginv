@@ -13,14 +13,9 @@ export function DressCodeSection() {
             ДРЕСС-КОД
           </h2>
 
-          <p className="mx-auto mt-5 max-w-[360px] text-[13px] uppercase leading-[1.85] tracking-[0.08em] text-[#201d1a]/72">
-            Нам будет очень приятно, если вы учтёте
-            <br />
-            наши пожелания и при выборе одежды
-            <br />
-            предпочтёте вечерние наряды в
-            <br />
-            представленной ниже гамме.
+          <p className="mx-auto mt-5 max-w-[320px] text-pretty text-[13px] uppercase leading-[1.75] tracking-[0.05em] text-[#201d1a]/72 sm:max-w-[400px] sm:text-[14px] sm:leading-[1.8] sm:tracking-[0.07em] md:max-w-[460px]">
+            Нам будет очень приятно, если вы учтёте наши пожелания и при выборе
+            одежды предпочтёте вечерние наряды в представленной ниже гамме.
           </p>
 
           <div className="mt-10 flex justify-center px-2">
