@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
+import { sendForm } from './api/forms'
 import { WeddingInvitation } from './components/wedding/WeddingInvitation'
 import { WeddingInvitationSecondDay } from './components/wedding/WeddingInvitationSecondDay'
 import {
+  buildInvitationSubmissionFields,
+  buildInvitationSubmissionMessage,
   buildInvitationSubmissionPayload,
   type InvitationDraft,
   initialInvitationDraft,
@@ -10,6 +13,11 @@ import {
 
 type InvitationRoute = 'main' | 'second-day'
 const INVITATION_DRAFT_STORAGE_KEY = 'weddingInvitationDraft'
+
+type SubmitInvitationResult = {
+  ok: boolean
+  error?: string
+}
 
 function getInvitationRoute(): InvitationRoute {
   return window.location.hash === '#/second-day' ? 'second-day' : 'main'
@@ -88,13 +96,29 @@ function App() {
     }))
   }
 
-  const handleSubmitInvitation = () => {
+  const handleSubmitInvitation = async (): Promise<SubmitInvitationResult> => {
     const payload = buildInvitationSubmissionPayload(draft)
-    console.group('Финальные данные анкеты')
-    console.table([payload])
-    console.log(payload)
-    console.log(JSON.stringify(payload, null, 2))
-    console.groupEnd()
+    const fields = buildInvitationSubmissionFields(draft)
+    const formData = new FormData()
+
+    Object.entries(fields).forEach(([key, value]) => {
+      if (!value) {
+        return
+      }
+
+      formData.append(key, value)
+    })
+
+    formData.append('subject', 'Новая анкета WeddingInv')
+    formData.append('from_name', payload['Имя и фамилия гостя'] || 'Гость WeddingInv')
+    formData.append('message', buildInvitationSubmissionMessage(payload))
+
+    const result = await sendForm(formData)
+
+    return {
+      ok: result.ok,
+      error: result.error ?? result.message ?? 'Не удалось отправить анкету',
+    }
   }
 
   return route === 'second-day'

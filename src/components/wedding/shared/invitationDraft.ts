@@ -28,6 +28,14 @@ export type InvitationSubmissionPayload = {
   'Второй день: напитки'?: string
 }
 
+export type InvitationSubmissionFields = {
+  guest_full_name: string
+  first_day_attending: string
+  second_day_attending: string
+  first_day_toast?: string
+  second_day_drinks?: string
+}
+
 const createDayRsvpState = (): DayRsvpState => ({
   attending: '',
   drinks: [],
@@ -169,4 +177,35 @@ export function buildInvitationSubmissionPayload(
   }
 
   return payload
+}
+
+export function buildInvitationSubmissionFields(
+  draft: InvitationDraft,
+): InvitationSubmissionFields {
+  const fields: InvitationSubmissionFields = {
+    guest_full_name: draft.guest.fullName.trim(),
+    first_day_attending: formatAttending(draft.firstDay.attending),
+    second_day_attending: formatAttending(draft.secondDay.attending),
+  }
+
+  if (draft.firstDay.attending !== 'no') {
+    fields.first_day_toast = formatFirstDayToast(draft.firstDay.drinks)
+  }
+
+  if (draft.secondDay.attending !== 'no') {
+    fields.second_day_drinks = formatDrinks(
+      draft.secondDay.drinks,
+      draft.secondDay.otherDrink,
+    )
+  }
+
+  return fields
+}
+
+export function buildInvitationSubmissionMessage(
+  payload: InvitationSubmissionPayload,
+): string {
+  return Object.entries(payload)
+    .map(([label, value]) => `${label}: ${value}`)
+    .join('\n')
 }

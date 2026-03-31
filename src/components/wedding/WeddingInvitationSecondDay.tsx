@@ -19,7 +19,10 @@ const FIRST_DAY_RSVP_SCROLL_TARGET = 'first-day-rsvp'
 type WeddingInvitationSecondDayProps = {
   draft: InvitationDraft
   onSecondDayChange: (nextSecondDay: InvitationDraft['secondDay']) => void
-  onSubmitInvitation: () => void
+  onSubmitInvitation: () => Promise<{
+    ok: boolean
+    error?: string
+  }>
 }
 
 export function WeddingInvitationSecondDay({
@@ -29,7 +32,8 @@ export function WeddingInvitationSecondDay({
 }: WeddingInvitationSecondDayProps) {
   const backgroundImageSrc = getPublicAssetUrl('block2/фон.jpg')
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false)
-  const [modalStatus, setModalStatus] = useState<'review' | 'success'>('review')
+  const [modalStatus, setModalStatus] = useState<'review' | 'submitting' | 'success'>('review')
+  const [submitError, setSubmitError] = useState('')
   const submissionPreview = buildInvitationSubmissionPayload(draft)
   const isSecondDayDeclined = draft.secondDay.attending === 'no'
   const shouldShowSecondDayDetails = draft.secondDay.isSubmitted && !isSecondDayDeclined
@@ -66,17 +70,34 @@ export function WeddingInvitationSecondDay({
       return
     }
 
+    setSubmitError('')
     setModalStatus('review')
     setIsSummaryModalOpen(true)
   }
 
   const handleCloseSummary = () => {
+    if (modalStatus === 'submitting') {
+      return
+    }
+
+    setSubmitError('')
     setIsSummaryModalOpen(false)
     setModalStatus('review')
   }
 
-  const handleConfirmSubmit = () => {
-    if (draft.secondDay.isSubmitted) {
+  const handleConfirmSubmit = async () => {
+    if (draft.secondDay.isSubmitted || modalStatus === 'submitting') {
+      return
+    }
+
+    setSubmitError('')
+    setModalStatus('submitting')
+
+    const result = await onSubmitInvitation()
+
+    if (!result.ok) {
+      setSubmitError(result.error ?? 'Не удалось отправить анкету. Попробуйте ещё раз.')
+      setModalStatus('review')
       return
     }
 
@@ -84,11 +105,11 @@ export function WeddingInvitationSecondDay({
       ...draft.secondDay,
       isSubmitted: true,
     })
-    onSubmitInvitation()
     setModalStatus('success')
 
     window.setTimeout(() => {
       setIsSummaryModalOpen(false)
+      setSubmitError('')
       setModalStatus('review')
 
       secondDayThemeRef.current?.scrollIntoView({
@@ -239,6 +260,7 @@ export function WeddingInvitationSecondDay({
                   <button
                     type="button"
                     onClick={handleCloseSummary}
+                    disabled={modalStatus === 'submitting'}
                     className="inline-flex min-h-[46px] w-full items-center justify-center rounded-full border border-[#a48658]/26 bg-transparent px-5 text-[11px] uppercase tracking-[0.16em] text-[#281d17] transition hover:bg-[rgba(165,134,88,0.08)] sm:min-h-[48px] sm:text-[12px]"
                   >
                     Изменить
@@ -246,11 +268,18 @@ export function WeddingInvitationSecondDay({
                   <button
                     type="button"
                     onClick={handleConfirmSubmit}
+                    disabled={modalStatus === 'submitting'}
                     className="inline-flex min-h-[46px] w-full items-center justify-center rounded-full border border-[#710f23] bg-[#710f23] px-5 text-[11px] uppercase tracking-[0.16em] text-[#f7f1e8] transition hover:bg-[#5f0c1d] sm:min-h-[48px] sm:text-[12px]"
                   >
-                    Отправить
+                    {modalStatus === 'submitting' ? 'Отправляем...' : 'Отправить'}
                   </button>
                 </div>
+
+                {submitError ? (
+                  <p className="mt-4 text-center text-[12px] leading-[1.6] text-[#710f23]">
+                    {submitError}
+                  </p>
+                ) : null}
               </>
             )}
           </div>
