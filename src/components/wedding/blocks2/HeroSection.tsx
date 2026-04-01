@@ -66,7 +66,7 @@ export function HeroSection() {
                   ЕКАТЕРИНА
                 </h1>
                 <div className="mt-1 font-serifDisplay text-[28px] font-light tracking-[0.18em] text-[#e9d4a0] [text-shadow:0_2px_14px_rgba(0,0,0,0.3)] sm:text-[34px]">
-                  06 05 25
+                  06 05 26
                 </div>
                 <p className="mx-auto mt-6 max-w-[340px] text-[12px] uppercase leading-[1.8] tracking-[0.18em] text-[#f1e3bf]/92">
                   банкетный драйв, тосты без микрофона, песни хором

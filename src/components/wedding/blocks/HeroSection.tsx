@@ -43,7 +43,7 @@ export function HeroSection() {
                   ЕКАТЕРИНА
                 </h1>
                 <div className="mt-1 font-serifDisplay text-[28px] font-light tracking-[0.18em] text-[#f0e6d8] sm:text-[34px]">
-                  05 05 25
+                  05 05 26
                 </div>
               </div>
 
