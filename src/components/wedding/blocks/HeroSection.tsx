@@ -1,15 +1,9 @@
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
+import { buildMonthGrid, weekDays } from '../shared/calendar'
 import { getPublicAssetUrl } from '../shared/getPublicAssetUrl'
 
-const weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'] as const
-const mayGrid = [
-  null, null, null, 1, 2, 3, 4,
-  5, 6, 7, 8, 9, 10, 11,
-  12, 13, 14, 15, 16, 17, 18,
-  19, 20, 21, 22, 23, 24, 25,
-  26, 27, 28, 29, 30, 31,
-] as const
+const mayGrid = buildMonthGrid(2026, 4)
 
 export function HeroSection() {
   const heroImageSrc = getPublicAssetUrl('hero.jpg')

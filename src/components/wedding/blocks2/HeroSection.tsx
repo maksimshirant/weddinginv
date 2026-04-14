@@ -1,14 +1,8 @@
 import { Reveal } from '../shared/Reveal'
 import { InviteCard } from '../shared/InviteCard'
+import { buildMonthGrid, weekDays } from '../shared/calendar'
 
-const weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'] as const
-const mayGrid = [
-  null, null, null, 1, 2, 3, 4,
-  5, 6, 7, 8, 9, 10, 11,
-  12, 13, 14, 15, 16, 17, 18,
-  19, 20, 21, 22, 23, 24, 25,
-  26, 27, 28, 29, 30, 31,
-] as const
+const mayGrid = buildMonthGrid(2026, 4)
 
 function StarCalendarDay({
   day,
@@ -117,9 +111,7 @@ export function HeroSection() {
                 {mayGrid.map((day, index) => (
                   <div key={`${day ?? 'empty'}-${index}`} className="flex h-8 items-center justify-center">
                     {day ? (
-                      day === 6 ? (
-                        <StarCalendarDay day={day} />
-                      ) : day === 7 ? (
+                      day === 6 || day === 7 ? (
                         <StarCalendarDay day={day} />
                       ) : (
                         <span className="flex h-8 w-8 items-center justify-center text-[13px] font-light text-white/78">
